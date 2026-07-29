@@ -10,7 +10,7 @@ load_dotenv()
 GROQ_API_KEY = os.getenv("GROQ_API_KEY")
 
 
-def knowledge_agent(question):
+def knowledge_agent(message):
 
     embeddings = HuggingFaceEmbeddings(
         model_name="sentence-transformers/all-MiniLM-L6-v2"
@@ -20,18 +20,22 @@ def knowledge_agent(question):
         from create_vectorstore import create_vectorstore
         create_vectorstore()
 
+
     vectorstore = Chroma(
         persist_directory="vectorstore",
         embedding_function=embeddings
     )
 
+    question = message["query"]
     docs = vectorstore.similarity_search(question, k=1)
+
 
     if docs:
 
         context = "\n\n".join(
-            [doc.page_content for doc in docs]
+            [doc.page_content[:1000] for doc in docs]
         )
+
 
         llm = ChatGroq(
             groq_api_key=GROQ_API_KEY,
@@ -39,19 +43,22 @@ def knowledge_agent(question):
             temperature=0.2
         )
 
+
         prompt = f"""
-You are a Home Gardening Assistant.
+You are an AI Home Gardening Assistant.
 
 Answer the user's question using the knowledge provided.
 
 Rules:
-- Give a short answer.
+- Answer like a gardening expert.
 - Do not mention page numbers.
 - Do not mention book names.
-- Do not copy the source text.
-- Summarize in your own words.
-- Give practical gardening advice.
+- Do not repeat the source text.
+- Remove phrases like "Page", "Growing Great Tomatoes", or PDF references.
+- Summarize the information in your own words.
+- Give causes and solutions only.
 - Use simple English.
+- Maximum 6 bullet points.
 
 Knowledge:
 {context}
@@ -59,12 +66,14 @@ Knowledge:
 Question:
 {question}
 
-Answer:
+Final Answer:
 """
+
 
         response = llm.invoke(prompt)
 
         return response.content
+
 
     else:
         return "No relevant gardening information found."
