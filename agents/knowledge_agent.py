@@ -1,7 +1,6 @@
 from langchain_chroma import Chroma
 from langchain_huggingface import HuggingFaceEmbeddings
 from langchain_groq import ChatGroq
-import streamlit as st
 from dotenv import load_dotenv
 import os
 
@@ -18,6 +17,7 @@ def knowledge_agent(question):
     )
 
 
+    # Create vectorstore if it does not exist
     if not os.path.exists("vectorstore/chroma.sqlite3"):
         from create_vectorstore import create_vectorstore
         create_vectorstore()
@@ -29,6 +29,7 @@ def knowledge_agent(question):
     )
 
 
+    # Search relevant information
     docs = vectorstore.similarity_search(question, k=3)
 
 
@@ -46,17 +47,26 @@ def knowledge_agent(question):
 
 
         prompt = f"""
-You are a helpful Home Gardening Assistant.
+You are a helpful AI Home Gardening Assistant.
 
-Use the knowledge below to answer.
+Answer the user's gardening question using the provided knowledge.
+
+Instructions:
+- Give a simple and clear answer.
+- Do not mention PDF pages or document names.
+- Do not copy the knowledge directly.
+- Summarize the important information.
+- Provide possible causes and practical solutions.
+- Use bullet points when explaining steps.
+- Keep the answer easy for beginners to understand.
 
 Knowledge:
 {context}
 
-Question:
+User Question:
 {question}
 
-Give a simple gardening answer.
+Answer:
 """
 
 
