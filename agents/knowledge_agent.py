@@ -1,13 +1,13 @@
 from langchain_chroma import Chroma
 from langchain_huggingface import HuggingFaceEmbeddings
 from langchain_groq import ChatGroq
-from dotenv import dotenv_values
+import streamlit as st
+from dotenv import load_dotenv
+import os
 
+load_dotenv()
 
-# Load API key from .env
-config = dotenv_values(".env")
-GROQ_API_KEY = config["GROQ_API_KEY"]
-
+GROQ_API_KEY = st.secrets["GROQ_API_KEY"] if "GROQ_API_KEY" in st.secrets else os.getenv("GROQ_API_KEY")
 
 def knowledge_agent(question):
 
