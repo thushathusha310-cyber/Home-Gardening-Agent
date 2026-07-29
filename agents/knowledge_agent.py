@@ -16,22 +16,16 @@ def knowledge_agent(question):
         model_name="sentence-transformers/all-MiniLM-L6-v2"
     )
 
-
-    # Create vectorstore if it does not exist
     if not os.path.exists("vectorstore/chroma.sqlite3"):
         from create_vectorstore import create_vectorstore
         create_vectorstore()
-
 
     vectorstore = Chroma(
         persist_directory="vectorstore",
         embedding_function=embeddings
     )
 
-
-    # Search relevant information
     docs = vectorstore.similarity_search(question, k=1)
-
 
     if docs:
 
@@ -39,25 +33,23 @@ def knowledge_agent(question):
             [doc.page_content for doc in docs]
         )
 
-
-       llm = ChatGroq(
-    groq_api_key=GROQ_API_KEY,
-    model_name="llama-3.1-8b-instant",
-    temperature=0.2
-)
+        llm = ChatGroq(
+            groq_api_key=GROQ_API_KEY,
+            model_name="llama-3.1-8b-instant",
+            temperature=0.2
         )
 
-prompt = f"""
+        prompt = f"""
 You are a Home Gardening Assistant.
 
 Answer the user's question using the knowledge provided.
 
 Rules:
-- Give a short answer (maximum 6 sentences).
+- Give a short answer.
 - Do not mention page numbers.
 - Do not mention book names.
 - Do not copy the source text.
-- Summarize the information in your own words.
+- Summarize in your own words.
 - Give practical gardening advice.
 - Use simple English.
 
@@ -70,11 +62,9 @@ Question:
 Answer:
 """
 
-
         response = llm.invoke(prompt)
 
         return response.content
-
 
     else:
         return "No relevant gardening information found."
