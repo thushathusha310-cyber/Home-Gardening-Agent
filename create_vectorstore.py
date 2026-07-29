@@ -7,12 +7,10 @@ from langchain_chroma import Chroma
 
 def create_vectorstore():
 
-    # Load PDF documents
     documents = load_pdfs()
 
     print("PDF loading completed")
 
-    # Split text
     text_splitter = RecursiveCharacterTextSplitter(
         chunk_size=1000,
         chunk_overlap=200
@@ -22,12 +20,12 @@ def create_vectorstore():
 
     print("Total chunks:", len(chunks))
 
-    # Create embeddings
+
     embeddings = HuggingFaceEmbeddings(
         model_name="sentence-transformers/all-MiniLM-L6-v2"
     )
 
-    # Create vector database
+
     Chroma.from_documents(
         documents=chunks,
         embedding=embeddings,
@@ -35,3 +33,7 @@ def create_vectorstore():
     )
 
     print("Vector database created successfully!")
+
+
+if __name__ == "__main__":
+    create_vectorstore()
