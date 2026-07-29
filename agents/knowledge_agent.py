@@ -30,7 +30,7 @@ def knowledge_agent(question):
 
 
     # Search relevant information
-    docs = vectorstore.similarity_search(question, k=3)
+    docs = vectorstore.similarity_search(question, k=1)
 
 
     if docs:
@@ -40,30 +40,31 @@ def knowledge_agent(question):
         )
 
 
-        llm = ChatGroq(
-            groq_api_key=GROQ_API_KEY,
-            model_name="llama-3.1-8b-instant"
+       llm = ChatGroq(
+    groq_api_key=GROQ_API_KEY,
+    model_name="llama-3.1-8b-instant",
+    temperature=0.2
+)
         )
 
+prompt = f"""
+You are a Home Gardening Assistant.
 
-        prompt = f"""
-You are a helpful AI Home Gardening Assistant.
+Answer the user's question using the knowledge provided.
 
-Answer the user's gardening question using the provided knowledge.
-
-Instructions:
-- Give a simple and clear answer.
-- Do not mention PDF pages or document names.
-- Do not copy the knowledge directly.
-- Summarize the important information.
-- Provide possible causes and practical solutions.
-- Use bullet points when explaining steps.
-- Keep the answer easy for beginners to understand.
+Rules:
+- Give a short answer (maximum 6 sentences).
+- Do not mention page numbers.
+- Do not mention book names.
+- Do not copy the source text.
+- Summarize the information in your own words.
+- Give practical gardening advice.
+- Use simple English.
 
 Knowledge:
 {context}
 
-User Question:
+Question:
 {question}
 
 Answer:
