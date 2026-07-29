@@ -9,18 +9,22 @@ load_dotenv()
 
 GROQ_API_KEY = st.secrets["GROQ_API_KEY"] if "GROQ_API_KEY" in st.secrets else os.getenv("GROQ_API_KEY")
 
+
 def knowledge_agent(question):
 
     embeddings = HuggingFaceEmbeddings(
         model_name="sentence-transformers/all-MiniLM-L6-v2"
     )
 
+    if not os.path.exists("vectorstore"):
+        from create_vectorstore import create_vectorstore
+        create_vectorstore()
+
     vectorstore = Chroma(
         persist_directory="vectorstore",
         embedding_function=embeddings
     )
 
-    # Search relevant information from PDFs
     docs = vectorstore.similarity_search(question, k=3)
 
     if docs:
@@ -29,7 +33,6 @@ def knowledge_agent(question):
             [doc.page_content for doc in docs]
         )
 
-        # Groq LLM
         llm = ChatGroq(
             groq_api_key=GROQ_API_KEY,
             model_name="llama-3.1-8b-instant"
