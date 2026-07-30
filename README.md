@@ -64,7 +64,7 @@ It searches the gardening knowledge base before generating the final answer.
   
 
 
-### 3. Retrieval-Augmented Generation (RAG)
+### 4.  Retrieval-Augmented Generation (RAG)
 
 Location:
 agents/knowledge_agent.py
@@ -100,6 +100,31 @@ Groq LLM
 
 Final Response
 
+
+## Agent Communication Protocol
+
+The agents exchange information during the problem-solving process.
+
+Planning Agent sends the task details to the Knowledge Agent.
+
+Example message:
+
+{
+ "task": "Find gardening information",
+ "action": "Retrieve relevant documents"
+}
+
+Knowledge Agent returns the retrieved information:
+
+{
+ "context": "Relevant plant care information",
+ "result": "Generated gardening recommendation"
+}
+
+This communication allows multiple agents to collaborate and produce a better response.
+
+
+
 ## RAG Pipeline
 
 
@@ -134,13 +159,17 @@ Groq LLM
 
 Answer
 
-## Model Selection
+## Model Selection Strategy
 
+| Task | Model | Provider | Reason for Selection |
+|---|---|---|---|
+| Text Embedding | all-MiniLM-L6-v2 | HuggingFace | Fast and lightweight embedding model suitable for semantic search. |
+| Answer Generation | Llama model | Groq | Low latency, good reasoning ability, and suitable for generating gardening recommendations. |
 
-| Task | Model | Reason |
-|-|-|-|
-| Text Embedding | all-MiniLM-L6-v2 | Fast and lightweight embedding model |
-| Answer Generation | Groq Llama model | Low latency and good reasoning ability |
+The embedding model is selected because it provides efficient vector representation with low computational requirements.
+
+The Groq Llama model is selected for final response generation because it provides faster inference and good quality answers for user queries.
+
 
 ## Technologies
 
