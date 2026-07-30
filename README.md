@@ -123,7 +123,7 @@ Knowledge Agent returns the retrieved information:
 
 This communication allows multiple agents to collaborate and produce a better response.
 
-
+The structured message exchange helps the Planning Agent and Knowledge Agent collaborate before generating the final response.
 
 ## RAG Pipeline
 
