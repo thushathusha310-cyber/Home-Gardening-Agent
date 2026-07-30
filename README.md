@@ -171,6 +171,23 @@ The embedding model is selected because it provides efficient vector representat
 The Groq Llama model is selected for final response generation because it provides faster inference and good quality answers for user queries.
 
 
+## RAG Retrieval Evaluation
+
+Five sample gardening queries were tested to evaluate whether the retrieved information was relevant.
+
+| User Query | Retrieved Context Result |
+|---|---|
+| How often should I water tomato plants? | Relevant watering information was retrieved from the knowledge base. |
+| What causes yellow leaves in plants? | Relevant plant disease information was retrieved. |
+| What fertilizer is suitable for indoor plants? | Related fertilizer recommendations were retrieved. |
+| How can I control plant pests? | Relevant pest management information was found. |
+| How much sunlight do plants need? | Relevant sunlight requirements were retrieved. |
+
+The evaluation showed that the RAG pipeline was able to retrieve useful gardening information from the stored documents before generating answers.
+
+
+
+
 ## Technologies
 
 - Python
