@@ -159,6 +159,27 @@ Groq LLM
 
 Answer
 
+## Document Processing Strategy
+
+The gardening documents are processed before storing them in the vector database.
+
+Processing steps:
+
+- PDF documents are loaded from the gardening knowledge base.
+- The text content is divided into smaller chunks.
+- Chunk overlap is used to maintain context between related sections.
+- HuggingFace embeddings convert text chunks into vector representations.
+- ChromaDB stores the generated vectors for similarity search.
+
+Configuration:
+
+- Chunk Size: 500 characters
+- Chunk Overlap: 50 characters
+
+This approach improves retrieval accuracy by allowing the system to find relevant gardening information from the knowledge base.
+
+
+
 ## Model Selection Strategy
 
 | Task | Model | Provider | Reason for Selection |
