@@ -148,10 +148,10 @@ Answer
 The application is deployed using Streamlit Community Cloud.
 
 Live Demo:
-(Add your Streamlit URL here)
+https://home-gardening-agent-bzc3rcefecfnyu7e4vziig.streamlit.app/
 
 GitHub Repository:
-(Add your GitHub link here)
+https://github.com/thushathusha310-cyber/Home-Gardening-Agent
 
 ## Limitations
 
