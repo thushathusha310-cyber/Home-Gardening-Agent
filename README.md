@@ -230,6 +230,9 @@ https://home-gardening-agent-bzc3rcefecfnyu7e4vziig.streamlit.app/
 GitHub Repository:
 https://github.com/thushathusha310-cyber/Home-Gardening-Agent
 
+The application is deployed and accessible through Streamlit Community Cloud for public demonstration.
+
+
 ## Limitations
 
 - The system provides gardening guidance only from the available knowledge base.
