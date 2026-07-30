@@ -54,6 +54,16 @@ The planning agent breaks the user request into smaller steps:
 - Generate solution
 
 
+### 3. Tool-use Pattern
+
+Location:
+agents/knowledge_agent.py
+
+The knowledge agent uses the Chroma vector database as a retrieval tool.
+It searches the gardening knowledge base before generating the final answer.
+  
+
+
 ### 3. Retrieval-Augmented Generation (RAG)
 
 Location:
