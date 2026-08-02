@@ -1,17 +1,22 @@
 import streamlit as st
-from agent_controller import agent_controller
 
-st.title("🌱 Home Gardening Assistant")
+st.set_page_config(
+    page_title="AI Home Gardening Assistant",
+    page_icon="🌸"
+)
 
-st.write("Welcome to the AI Home Gardening Assistant!")
+st.markdown(
+    """
+    <style>
+    .stApp {
+        background-color: #E8F5E9;
+    }
+    </style>
+    """,
+    unsafe_allow_html=True
+)
 
-question = st.text_input("Ask your gardening question:")
+st.title("🌸 AI Home Gardening Assistant 🌿")
 
-if question:
-    st.write("**Your Question:**", question)
-
-    with st.spinner("AI Agent is thinking..."):
-        answer = agent_controller(question)
-
-    st.subheader("Answer")
-    st.write(answer)
+st.write("🌺 Welcome to your smart gardening companion!")
+st.write("🌱 Ask questions about plants, flowers, soil, watering, and gardening care.")
