@@ -46,7 +46,7 @@ st.markdown(
 
 from agent_controller import agent_controller
 
-st.title("🌿🏠 Home Gardening Assistant🧑‍🌾🚜")
+st.title("🌿🏠 Home Gardening Assistant🧑‍🌾")
 
 st.write(
 """
